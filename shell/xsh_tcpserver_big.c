@@ -5,9 +5,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define RECV_MAX 1024
-#define SEND_MAX 1024
+#define RECV_MAX 2000
+#define SEND_MAX 2000
 
+void process_server(int32 client);
 /*------------------------------------------------------------------------
  * xsh_tcpserver - simple server for testing TCP in Xinu
  *------------------------------------------------------------------------
@@ -40,7 +41,8 @@ shellcmd xsh_tcpserver_big(int nargs, char *args[])
 		/* Get connection from client */
 		int32 client;
 		if(tcp_recv(slot, (char *) &client, 4) == SYSERR) {
-			continue;
+		  kprintf("\nEncountered SYSERR\n");
+		  break;
 		}
 
 		printf("New connection from %x\n", tcbtab[client].tcb_rip);
@@ -50,7 +52,9 @@ shellcmd xsh_tcpserver_big(int nargs, char *args[])
 		/* Close client slot */
 		printf("\tClosing connection...\n");
 		tcp_close(client);
-	}
+		// If break is uncommented, then multiple connections will not work
+		//break;
+		}
 
 	return 0;
 }
@@ -66,8 +70,12 @@ void process_server(int32 client)
 		/* Receive message from client */
 		rcvbuf = (char *)getmem(RECV_MAX * sizeof(char));
 		int32 size = tcp_recv(client, rcvbuf, RECV_MAX);
+
+		if (size == 0)
+		  return;
+		
 		rcvbuf[size] = '\0';
-		printf("\tGot message: %s SIZE: %d\n", rcvbuf, size);
+		printf("\tGot message: %s \n\n\nSIZE: %d\n\n\n", rcvbuf, size);
 
 		/* Send reply to client */
 		sndbuf = (char *)getmem(SEND_MAX * sizeof(char));
@@ -88,7 +96,7 @@ void process_server(int32 client)
 		{
 			freemem(rcvbuf, RECV_MAX * sizeof(char));
 			rcvbuf = NULL;
-			break;
+			//break;
 		}
 
 		freemem(rcvbuf, RECV_MAX * sizeof(char));

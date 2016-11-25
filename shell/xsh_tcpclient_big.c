@@ -5,9 +5,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define RECV_MAX 1024
-#define SEND_MAX 1024
-#define MSG_SIZE 1024
+#define RECV_MAX 2000
+#define SEND_MAX 2000
+#define MSG_SIZE 2000
 
 /*------------------------------------------------------------------------
  * xsh_tcpclient - simple client for testing TCP in Xinu
@@ -59,12 +59,17 @@ shellcmd xsh_tcpclient_big(int nargs, char *args[])
 
 	char * sndbuf = NULL;
 
+	char count = '1';
 	while(1)
 	{
 		sndbuf = (char *)getmem(SEND_MAX * sizeof(char));
 		/* int32 _bread = read(stdin, sndbuf, SEND_MAX);
 		fprintf(stderr, "BYTES READ: %d\n", _bread);
 		sndbuf[_bread] = '\0'; */
+		msg[0] = count;
+		count++;
+		msg[MSG_SIZE-1] = '\0';
+		strcpy(sndbuf, "term");
 		sprintf(sndbuf, "%s", msg);
 		if(!strcmp(sndbuf, "exit"))
 		{
@@ -73,6 +78,7 @@ shellcmd xsh_tcpclient_big(int nargs, char *args[])
 		}
 		printf("Sending packet...\n");
 		tcp_send(slot, sndbuf, strlen(sndbuf));
+		printf("Sent packet contents: %s\n\n", sndbuf);
 
 		rcvbuf = (char *)getmem(RECV_MAX * sizeof(char));
 		printf("Receiving reply: ");
