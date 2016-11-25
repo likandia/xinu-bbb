@@ -36,7 +36,7 @@ shellcmd xsh_tcpserver_big(int nargs, char *args[])
 	slot = tcp_register(NetData.ipucast, port, 0);	/* 0 = passive */
 	printf("%d\n");
 
-	while(TRUE) 
+	while(TRUE)
 	{
 		/* Get connection from client */
 		int32 client;
