@@ -46,5 +46,6 @@ int32	tcprto(
 	if (tcbptr->tcb_rto < TCP_MIN_RTO)
 		tcbptr->tcb_rto = TCP_MIN_RTO;
 
+	printf("\nCurrent round trip time: %d\n", tcbptr->tcb_rto);
 	return tcbptr->tcb_rto;
 }
