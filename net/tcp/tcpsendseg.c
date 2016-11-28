@@ -60,14 +60,15 @@ void	tcpsendseg(
 		tcbptr->tcb_flags |= TCBF_RTTPEND;
 		tcbptr->tcb_rttseq = pkt->net_tcpseq;
 		tcbptr->tcb_rtttime = (int)ctr1000;
+		kprintf("\ntcpsendseg rtt: %d\n", tcbptr->tcb_rtttime);
 	}
 
 	/*DEBUG*/
-	//kprintf("OUT: seq %x ackseq %x\n", pkt->net_tcpseq, pkt->net_tcpack);
+	kprintf("OUT: seq %x ackseq %x\n", pkt->net_tcpseq, pkt->net_tcpack);
 
 	/* DEBUG NOTE: Call `pdumph(pkt)` here to dump outgoing segments */
 	/* ADDITIONALLY: Outgoing ACKs are dumped in tcpack.c, NOT here. */
-	//pdumph(pkt);
+	pdumph(pkt);
 
 	ip_enqueue(pkt);
 	return;
