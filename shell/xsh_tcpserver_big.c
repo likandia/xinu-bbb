@@ -5,8 +5,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define RECV_MAX 1522
-#define SEND_MAX 1522
+#define RECV_MAX 1490
+#define SEND_MAX 1490
 
 void process_server(int32 client);
 /*------------------------------------------------------------------------
