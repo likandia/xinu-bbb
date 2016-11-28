@@ -5,9 +5,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define RECV_MAX 2000
-#define SEND_MAX 2000
-#define MSG_SIZE 2000
+#define RECV_MAX 1522
+#define SEND_MAX 1522
+#define MSG_SIZE 1522
 
 /*------------------------------------------------------------------------
  * xsh_tcpclient - simple client for testing TCP in Xinu

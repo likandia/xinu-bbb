@@ -5,8 +5,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define RECV_MAX 2000
-#define SEND_MAX 2000
+#define RECV_MAX 1522
+#define SEND_MAX 1522
 
 void process_server(int32 client);
 /*------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void process_server(int32 client)
 
 		if (size == 0)
 		  return;
-		
+
 		rcvbuf[size] = '\0';
 		printf("\tGot message: %s \n\n\nSIZE: %d\n\n\n", rcvbuf, size);
 
